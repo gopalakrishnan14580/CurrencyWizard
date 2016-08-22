@@ -1,0 +1,390 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/currency_wizard"
+    tools:context=".activity.CurrencyWizard"
+    android:background="@color/white">
+    <RelativeLayout
+        android:id="@+id/currency_wizard_header"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:layout_alignParentTop="true"
+        android:background="@color/header">
+        <sdi.com.currencywizard.views.TextViewGothamBook
+            android:id="@+id/currency_wizard_title_txt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:textColor="@color/white"
+            android:text="@string/CurrencyWizard"
+            android:textSize="18dp"
+            android:layout_centerVertical="true"
+            android:layout_centerHorizontal="true" />
+        <ImageView
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:src="@drawable/basket"
+            android:id="@+id/basket_icon"
+            android:layout_alignTop="@+id/currency_wizard_title_txt"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginRight="23dp"
+            android:layout_marginEnd="23dp" />
+
+        <TextView
+            android:id="@+id/add_to_card"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:background="@drawable/cart"
+            android:layout_marginRight="5dp"
+            android:textColor="#FFFFFF"
+            android:text="0"
+            android:textSize="10dp"
+            android:padding="3dp"
+            android:gravity="center"
+            android:layout_marginTop="2dp"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true" />
+    </RelativeLayout>
+    <RelativeLayout
+        android:id="@+id/splace"
+        android:layout_below="@+id/currency_wizard_header"
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:background="#FFFFFF"/>
+    <RelativeLayout
+        android:id="@+id/mapview"
+        android:layout_below="@id/splace"
+        android:layout_width="match_parent"
+        android:layout_height="330dp"
+        android:background="@drawable/map">
+        <RelativeLayout
+            android:layout_marginTop="60dp"
+            android:layout_marginStart="30dp"
+            android:layout_marginEnd="30dp"
+            android:id="@+id/conversion"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <sdi.com.currencywizard.views.TextViewGothamBook
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="USD"
+                android:textSize="20dp"
+                android:id="@+id/from_dollar_name_txt"
+                android:textColor="@color/Currency"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true" />
+            <include
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                layout="@layout/custom_progress" />
+            <sdi.com.currencywizard.views.TextViewGothamBook
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="EUR"
+                android:textSize="20dp"
+                android:id="@+id/to_dollar_name_txt"
+                android:textColor="@color/Currency"
+                android:layout_alignTop="@+id/from_dollar_name_txt"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true" />
+        </RelativeLayout>
+        <RelativeLayout
+            android:id="@+id/flag"
+            android:layout_marginStart="30dp"
+            android:layout_marginEnd="30dp"
+            android:layout_below="@+id/conversion"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <ImageButton
+                android:layout_width="40dp"
+                android:layout_height="30dp"
+                android:background="@drawable/usd"
+                android:id="@+id/from_flag_name_img"
+                android:layout_alignTop="@+id/to_flag_name_img"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true" />
+            <ImageButton
+                android:layout_width="40dp"
+                android:layout_height="30dp"
+                android:background="@drawable/euro"
+                android:id="@+id/to_flag_name_img"
+                android:layout_centerVertical="true"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true" />
+        </RelativeLayout>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="250dp"
+            android:background="@drawable/bar"
+            android:layout_marginStart="30dp"
+            android:layout_marginEnd="30dp"
+            android:gravity="center"
+            android:id="@+id/currency_window"
+            android:layout_below="@+id/conversion"
+            android:layout_marginTop="110dp">
+            <sdi.com.currencywizard.views.TextViewGothamBoldOtf
+                android:id="@+id/currency_details"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Currency Details"
+                android:textColor="@color/currency_details"
+                android:textStyle="bold"
+                android:layout_marginLeft="30dp"
+                android:layout_marginTop="10dp"
+                android:textSize="16dp"/>
+            <LinearLayout
+                android:layout_below="@+id/currency_details"
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginLeft="15dp"
+                android:id="@+id/currency_values"
+                android:orientation="horizontal">
+                <sdi.com.currencywizard.views.TextViewGothamMediumOtf
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="1"
+                    android:id="@+id/from_dollar_txt"
+                    android:layout_marginLeft="15dp"
+                    android:textColor="@color/Currency"
+                    android:textSize="16dp"
+                    android:textStyle="bold"/>
+                <sdi.com.currencywizard.views.TextViewGothamBook
+                    android:layout_width="70dp"
+                    android:singleLine="false"
+                    android:layout_height="wrap_content"
+                    android:text="US Dollar"
+                    android:id="@+id/from_dollar_name_con_txt"
+                    android:textColor="@color/dollar_name"
+                    android:layout_marginLeft="15dp"/>
+                <sdi.com.currencywizard.views.TextViewGothamMediumOtf
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="="
+                    android:textColor="@color/Currency"
+                    android:id="@+id/equal_txt"
+                    android:layout_marginLeft="15dp"
+                    android:textSize="16dp"
+                    android:textStyle="bold"/>
+                <sdi.com.currencywizard.views.TextViewGothamMediumOtf
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="0.88"
+                    android:textColor="@color/Currency"
+                    android:id="@+id/to_dollar_txt"
+                    android:layout_marginLeft="15dp"
+                    android:textSize="16dp"
+                    android:textStyle="bold"/>
+                <sdi.com.currencywizard.views.TextViewGothamBook
+                    android:layout_width="70dp"
+                    android:layout_height="wrap_content"
+                    android:text="Euro"
+                    android:singleLine="false"
+                    android:textColor="@color/dollar_name"
+                    android:id="@+id/to_dollar_name_con_txt"
+                    android:layout_marginLeft="15dp"/>
+            </LinearLayout>
+
+
+
+            <LinearLayout
+                android:layout_below="@+id/currency_values"
+                android:id="@+id/country"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="5dp"
+                android:orientation="vertical"
+                android:layout_weight="1"
+                android:layout_height="wrap_content">
+                <sdi.com.currencywizard.views.TextViewMontserratBold
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="USD"
+                    android:layout_marginLeft="15dp"
+                    android:textSize="12dp"
+                    android:id="@+id/from_conversion_dollar_txt"
+                    android:textColor="@color/currency_details"
+                    android:textStyle="bold"/>
+
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_weight="1"
+                    android:id="@+id/currency_con"
+                    android:layout_marginLeft="15dp"
+                    android:layout_height="wrap_content">
+
+                    <sdi.com.currencywizard.views.TextViewMontserratBold
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="$"
+                        android:textSize="16dp"
+                        android:id="@+id/from_conversion_symbol_txt"
+                        android:textColor="@color/Currency"
+                        android:textStyle="bold"/>
+
+                <sdi.com.currencywizard.views.EditTextMontserratRegular
+                    android:layout_width="80dp"
+                    android:layout_height="30dp"
+                    android:text="1"
+                    android:textSize="18dp"
+                    android:inputType="numberDecimal"
+                    android:hint="0"
+                    android:id="@+id/from_con_dollar_rate_et"
+                    android:textColor="@color/Currency"
+                    android:imeOptions="actionDone"
+                    android:background="@color/transparent_background"
+                    android:textStyle="bold"
+                   />
+                    </LinearLayout>
+
+            </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_weight="1"
+                    android:layout_marginTop="5dp"
+                    android:layout_height="wrap_content">
+                    <sdi.com.currencywizard.views.TextViewMontserratBold
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="EURO"
+                        android:textStyle="bold"
+                        android:textSize="12dp"
+                        android:id="@+id/to_conversion_dollar_txt"
+                        android:textColor="@color/currency_details" />
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_weight="1"
+                        android:id="@+id/to_linear"
+                        android:layout_height="wrap_content">
+
+                        <sdi.com.currencywizard.views.TextViewMontserratBold
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="€"
+                            android:textSize="16dp"
+                            android:id="@+id/to_conversion_symbol_txt"
+                            android:textColor="@color/Currency"
+                            android:textStyle="bold"/>
+
+                    <sdi.com.currencywizard.views.EditTextMontserratRegular
+                        android:layout_width="80dp"
+                        android:layout_height="30dp"
+                        android:text="2"
+                        android:hint="0"
+                        android:textSize="18dp"
+                        android:inputType="numberDecimal"
+                        android:id="@+id/to_con_dollar_rate_et"
+                        android:imeOptions="actionDone"
+                        android:textColor="@color/Currency"
+                        android:background="@color/transparent_background"
+                        android:textStyle="bold" />
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </LinearLayout>
+        </RelativeLayout>
+    </RelativeLayout>
+    <LinearLayout
+        android:id="@+id/basket"
+        android:layout_above="@+id/buttons"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:background="#21b6a8"
+        android:orientation="horizontal">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center_horizontal"
+            android:id="@+id/existing_basket"
+            android:orientation="vertical">
+            <sdi.com.currencywizard.views.TextViewGothamBook
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/white"
+                android:textSize="14dp"
+                android:text="Add to"/>
+            <sdi.com.currencywizard.views.TextViewGothamMediumOtf
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/white"
+                android:textStyle="bold"
+                android:textSize="16dp"
+                android:text="Existing Basket"/>
+        </LinearLayout>
+        <TextView
+            android:layout_width="1dp"
+            android:layout_marginTop="7dp"
+            android:layout_marginBottom="7dp"
+            android:layout_height="match_parent"
+            android:background="@color/white" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginLeft="5dp"
+            android:gravity="center_horizontal"
+            android:id="@+id/new_basket"
+            android:orientation="vertical">
+            <sdi.com.currencywizard.views.TextViewGothamBook
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/white"
+                android:textSize="14dp"
+                android:text="Add to"/>
+            <sdi.com.currencywizard.views.TextViewGothamMediumOtf
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/white"
+                android:textSize="16dp"
+                android:textStyle="bold"
+                android:text="New Basket"/>
+        </LinearLayout>
+    </LinearLayout>
+    <LinearLayout
+        android:id="@+id/buttons"
+        android:layout_width="match_parent"
+        android:layout_height="47dp"
+        android:layout_weight="1"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:gravity="center"
+        android:layout_alignParentStart="true"
+        android:background="@drawable/grey"
+        android:orientation="horizontal">
+        <ImageView
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:id="@+id/camera"
+            android:src="@drawable/camera" />
+        <ImageView
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:id="@+id/settings"
+            android:src="@drawable/settings" />
+    </LinearLayout>
+</RelativeLayout>

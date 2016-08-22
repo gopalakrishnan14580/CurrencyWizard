@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#3F51B5</color>
+    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorAccent">#FF4081</color>
+    <color name="header">#01506e</color>
+    <color name="white">#ffffff</color>
+    <color name="Currency">#2c2c2e</color>
+    <color name="dollar_name">#878787</color>
+    <color name="title">#01506e</color>
+    <color name="add_a_note">#8e8e8e</color>
+    <color name="background">#21b6a8</color>
+    <color name="block">#000000</color>
+    <color name="created_on">#8d8d8d</color>
+    <color name="divider">#e5e5e5</color>
+    <color name="currency_details">#9f9fa0</color>
+    <color name="transparent_background">#00000000</color>
+    <color name="event_swipe_one">#CDCDCD</color>
+    <color name="event_swipe_two">#FF4D4C</color>
+    <color name="email_textColor">#21b6a8</color>
+
+</resources>
