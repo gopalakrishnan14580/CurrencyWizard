@@ -813,7 +813,7 @@ public class CaptureImage extends Activity implements ActivityCompat.OnRequestPe
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
-
+                //camera.startPreview();
             }
         });
     }
@@ -1368,7 +1368,23 @@ private void imageResult(String value)
         super.onDestroy();
         if (camera != null) {
             camera.release();
+
         }
+
+      /*  mSurfaceViewContainer.removeAllViews();
+        mSurfaceView = new SurfaceView(mSurfaceViewContainer.getContext());
+        mSurfaceViewContainer.addView(mSurfaceView, new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+
+        SurfaceHolder previewHolder = mSurfaceView.getHolder();
+        previewHolder.setType(SurfaceHolder.SURFACE_TYPE_PUSH_BUFFERS);
+        previewHolder.addCallback(mSurfaceHolderCallback);*/
+        /*if(camera!=null){
+            camera.stopPreview();
+            camera.setPreviewCallback(null);
+
+            camera.release();
+            camera = null;
+        }*/
     }
 
     private void showAlert(final Context context, final String title, final String msg) {
@@ -1390,6 +1406,8 @@ private void imageResult(String value)
             @Override
             public void onClick(View v) {
                 alertDialog.dismiss();
+
+                //camera.startPreview();
 
             }
         });
