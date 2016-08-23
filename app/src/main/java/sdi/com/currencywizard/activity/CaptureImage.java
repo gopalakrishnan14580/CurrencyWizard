@@ -606,6 +606,17 @@ public class CaptureImage extends Activity implements ActivityCompat.OnRequestPe
         if (camera != null) {
             try {
                 setUpCamera(camera);
+
+                camera.autoFocus(new Camera.AutoFocusCallback() {
+                    @Override
+                    public void onAutoFocus(boolean success, Camera camera) {
+
+                       // System.out.println("working");
+                        //takeImage();
+
+                    }
+                });
+
                 camera.setErrorCallback(new ErrorCallback() {
 
                     @Override
