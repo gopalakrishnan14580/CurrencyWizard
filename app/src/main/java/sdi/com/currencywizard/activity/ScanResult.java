@@ -45,6 +45,7 @@ public class ScanResult extends Activity implements Comparator<Country> {
 
     ListView scan_listView;
     ImageButton show_flag;
+    ImageView     scan_back;
     TextView show_help_overlay,show_currency_code;
 
     Point p;
@@ -75,9 +76,20 @@ public class ScanResult extends Activity implements Comparator<Country> {
         scan_listView=(ListView) findViewById(R.id.scan_listView);
 
         show_flag=(ImageButton) findViewById(R.id.show_flag);
+        scan_back=(ImageView) findViewById(R.id.scan_back);
 
         show_help_overlay=(TextView) findViewById(R.id.show_help_overlay);
         show_currency_code=(TextView) findViewById(R.id.show_currency_code);
+
+        scan_back.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                // Perform action on click
+
+                Intent activityChangeIntent = new Intent(ScanResult.this, CurrencyWizard.class);
+                startActivity(activityChangeIntent);
+                finish();
+            }
+        });
 
 try {
 

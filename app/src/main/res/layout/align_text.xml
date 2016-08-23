@@ -20,8 +20,8 @@
     <TextView
         android:id="@+id/txtHeader"
         android:layout_width="250dp"
-        android:layout_height="wrap_content"
-        android:gravity="center_horizontal"
+        android:layout_height="230dp"
+        android:gravity="center"
         android:padding="15dp"
         android:text="Align Text"
         android:textSize="20dp"

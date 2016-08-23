@@ -92,7 +92,6 @@
         layout="@layout/align_text" />
 
 
-
     <Button
         android:id="@+id/captureImage"
         android:layout_width="60dp"

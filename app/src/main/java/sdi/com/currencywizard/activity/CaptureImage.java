@@ -772,7 +772,7 @@ public class CaptureImage extends Activity implements ActivityCompat.OnRequestPe
                         ByteArrayOutputStream ostream = new ByteArrayOutputStream();
 
 
-                        cropBitmap=scaleCenterCrop(rotatedBitmap,50,100);
+                        cropBitmap=scaleCenterCrop(rotatedBitmap,65,100);
 
                         //cropBitmap = scaleDown(rotatedBitmap, 512, true);
 
@@ -813,7 +813,7 @@ public class CaptureImage extends Activity implements ActivityCompat.OnRequestPe
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
-                //camera.startPreview();
+                camera.startPreview();
             }
         });
     }
@@ -1407,7 +1407,7 @@ private void imageResult(String value)
             public void onClick(View v) {
                 alertDialog.dismiss();
 
-                //camera.startPreview();
+                camera.startPreview();
 
             }
         });
