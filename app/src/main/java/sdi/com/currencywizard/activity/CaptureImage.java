@@ -139,6 +139,8 @@ public class CaptureImage extends Activity implements ActivityCompat.OnRequestPe
 
     ProgressDialog pd;
 
+    boolean iscapture=true;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -238,7 +240,6 @@ public class CaptureImage extends Activity implements ActivityCompat.OnRequestPe
         camera_cur_conversion.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
 
-
                 // Perform action on click
 
                 //Toast.makeText(getApplication(), "Currency Exchanged.", Toast.LENGTH_LONG).show();
@@ -276,6 +277,7 @@ public class CaptureImage extends Activity implements ActivityCompat.OnRequestPe
 
     void takePicture() {
 
+        iscapture=true;
 
         cameraId = android.hardware.Camera.CameraInfo.CAMERA_FACING_BACK;
 
@@ -611,8 +613,13 @@ public class CaptureImage extends Activity implements ActivityCompat.OnRequestPe
                     @Override
                     public void onAutoFocus(boolean success, Camera camera) {
 
-                       // System.out.println("working");
-                        //takeImage();
+                        //System.out.println("working");
+
+                        if(iscapture)
+                        {
+                            takeImage();
+                            iscapture=false;
+                        }
 
                     }
                 });
@@ -663,8 +670,6 @@ public class CaptureImage extends Activity implements ActivityCompat.OnRequestPe
             default:
                 break;
         }
-
-
             // Back-facing
             rotation = (info.orientation - degree + 360) % 360;
 
@@ -829,23 +834,6 @@ public class CaptureImage extends Activity implements ActivityCompat.OnRequestPe
         });
     }
 
-
-    /*public Bitmap getResizedBitmap(Bitmap bm, int newHeight, int newWidth)
-    {
-        int width = bm.getWidth();
-        int height = bm.getHeight();
-        float scaleWidth = ((float) newWidth) / width;
-        float scaleHeight = ((float) newHeight) / height;
-        // create a matrix for the manipulation
-        Matrix matrix = new Matrix();
-        // resize the bit map
-        matrix.postScale(scaleWidth, scaleHeight);
-        // recreate the new Bitmap
-        Bitmap resizedBitmap = Bitmap.createBitmap(bm, 0, 0, width, height, matrix, false);
-        return resizedBitmap;
-    }
-
-*/
     public Bitmap scaleCenterCrop(Bitmap source, int newHeight, int newWidth) {
 
         int sourceWidth = source.getWidth();
@@ -1096,13 +1084,12 @@ private void imageResult(String value)
         if (responseList.size() == 1) {
             System.out.println("single");
 
-            check_onestr(responseList);
+            checkSingleValue(responseList);
 
 
         } else {
 
             System.out.println("multiple array");
-
 
             scanResultsList = new ArrayList<ScanResultList>();
             scanResultsList.clear();
@@ -1120,6 +1107,7 @@ private void imageResult(String value)
 
                     System.out.println(" Response values search -------------------:" + ch);
 
+
                     for (int j = 0; j < allCountriesList.size(); j++) {
 
                         String symbol = allCountriesList.get(j).getSymbol();
@@ -1130,7 +1118,6 @@ private void imageResult(String value)
                         }
                     }
                 }
-
 
                 System.out.println("getResponseCountriesList" + getResponseCountriesList.size());
 
@@ -1228,7 +1215,7 @@ private void imageResult(String value)
 
 }
 
-    private  void  check_onestr(List<JsonResponse> jsonResponses)
+    private  void  checkSingleValue(List<JsonResponse> jsonResponses)
     {
 
         for (JsonResponse value1 : jsonResponses) {
@@ -1381,21 +1368,6 @@ private void imageResult(String value)
             camera.release();
 
         }
-
-      /*  mSurfaceViewContainer.removeAllViews();
-        mSurfaceView = new SurfaceView(mSurfaceViewContainer.getContext());
-        mSurfaceViewContainer.addView(mSurfaceView, new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
-
-        SurfaceHolder previewHolder = mSurfaceView.getHolder();
-        previewHolder.setType(SurfaceHolder.SURFACE_TYPE_PUSH_BUFFERS);
-        previewHolder.addCallback(mSurfaceHolderCallback);*/
-        /*if(camera!=null){
-            camera.stopPreview();
-            camera.setPreviewCallback(null);
-
-            camera.release();
-            camera = null;
-        }*/
     }
 
     private void showAlert(final Context context, final String title, final String msg) {
@@ -1418,6 +1390,7 @@ private void imageResult(String value)
             public void onClick(View v) {
                 alertDialog.dismiss();
 
+                iscapture=true;
                 camera.startPreview();
 
             }

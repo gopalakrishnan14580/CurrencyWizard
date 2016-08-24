@@ -13,8 +13,6 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.os.StrictMode;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.util.Base64;
 import android.util.Log;
 import android.view.Gravity;
@@ -95,8 +93,6 @@ public class CurrencyWizard extends Activity implements Comparator<Country> {
 
     RelativeLayout currency_wizard;
 
-    private boolean keepChangingText = true;
-
     Context context;
 
     ProgressDialog pd;
@@ -115,7 +111,6 @@ public class CurrencyWizard extends Activity implements Comparator<Country> {
 
         //progress dialog
         context = this;
-
 
         basket_icon=(ImageView) findViewById(R.id.basket_icon);
         from_flag_name_img=(ImageButton) findViewById(R.id.from_flag_name_img);
@@ -176,6 +171,7 @@ public class CurrencyWizard extends Activity implements Comparator<Country> {
 
                 to_linear.setBackgroundResource(R.color.white);
                 currency_con.setBackgroundResource(R.color.white);
+                add_to_card.setVisibility(View.VISIBLE);
                 basket_icon.setVisibility(View.VISIBLE);
                 from_con_dollar_rate_et.setCursorVisible(false);
                 to_con_dollar_rate_et.setCursorVisible(false);
@@ -195,6 +191,7 @@ public class CurrencyWizard extends Activity implements Comparator<Country> {
 
                 to_linear.setBackgroundResource(R.color.white);
                 currency_con.setBackgroundResource(R.color.white);
+                add_to_card.setVisibility(View.VISIBLE);
                 basket_icon.setVisibility(View.VISIBLE);
                 from_con_dollar_rate_et.setCursorVisible(false);
                 to_con_dollar_rate_et.setCursorVisible(false);
@@ -221,20 +218,6 @@ public class CurrencyWizard extends Activity implements Comparator<Country> {
                 InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
                 imm.hideSoftInputFromWindow(mapview.getWindowToken(),
                         InputMethodManager.RESULT_UNCHANGED_SHOWN);
-
-
-            }
-        });
-
-        from_con_dollar_rate_et.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                // Perform action on click
-
-               to_linear.setBackgroundResource(R.drawable.grey);
-                currency_con.setBackgroundResource(R.drawable.grey);
-                basket_icon.setVisibility(View.GONE);
-                from_con_dollar_rate_et.setCursorVisible(true);
-                to_con_dollar_rate_et.setCursorVisible(true);
 
 
             }
@@ -431,26 +414,28 @@ public class CurrencyWizard extends Activity implements Comparator<Country> {
         });
 
 
-        to_con_dollar_rate_et.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                // Perform action on click
-                to_linear.setBackgroundResource(R.drawable.grey);
-                currency_con.setBackgroundResource(R.drawable.grey);
-                basket_icon.setVisibility(View.GONE);
-                to_con_dollar_rate_et.setCursorVisible(true);
-                from_con_dollar_rate_et.setCursorVisible(true);
-
-
-            }
-        });
-
-
-
         from_con_dollar_rate_et.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
                 if ((event != null && (event.getKeyCode() == KeyEvent.KEYCODE_ENTER)) || (actionId == EditorInfo.IME_ACTION_DONE)) {
 
                     from_con_dollar_rate_et.setCursorVisible(false);
+                    to_linear.setBackgroundResource(R.color.white);
+                    currency_con.setBackgroundResource(R.color.white);
+                    add_to_card.setVisibility(View.VISIBLE);
+                    basket_icon.setVisibility(View.VISIBLE);
+
+                    System.out.println("From Value : ---------> "+from_con_dollar_rate_et.getText().toString());
+
+
+                    if(!isNetworkConnected(getApplicationContext())){
+
+                        Toast.makeText(getApplication(), "Please check your internet connection.", Toast.LENGTH_LONG).show();
+                    }
+
+                    else {
+
+                        getCurrencyValue(from_dollar_value,to_dollar_value);
+                    }
 
                 }
                 return false;
@@ -463,6 +448,22 @@ public class CurrencyWizard extends Activity implements Comparator<Country> {
                 if ((event != null && (event.getKeyCode() == KeyEvent.KEYCODE_ENTER)) || (actionId == EditorInfo.IME_ACTION_DONE)) {
 
                     to_con_dollar_rate_et.setCursorVisible(false);
+                    to_linear.setBackgroundResource(R.color.white);
+                    currency_con.setBackgroundResource(R.color.white);
+                    add_to_card.setVisibility(View.VISIBLE);
+                    basket_icon.setVisibility(View.VISIBLE);
+
+                    System.out.println("To Value : ---------> "+to_con_dollar_rate_et.getText().toString());
+
+                    if(!isNetworkConnected(getApplicationContext())){
+
+                        Toast.makeText(getApplication(), "Please check your internet connection.", Toast.LENGTH_LONG).show();
+                    }
+
+                    else {
+
+                        getFromCurrencyValue(to_dollar_value,from_dollar_value);
+                    }
 
                 }
                 return false;
@@ -534,252 +535,28 @@ public class CurrencyWizard extends Activity implements Comparator<Country> {
                 // Perform action on click
                 to_linear.setBackgroundResource(R.drawable.grey);
                 currency_con.setBackgroundResource(R.drawable.grey);
+                add_to_card.setVisibility(View.GONE);
                 basket_icon.setVisibility(View.GONE);
                 to_con_dollar_rate_et.setCursorVisible(true);
                 from_con_dollar_rate_et.setCursorVisible(true);
 
-
-                from_con_dollar_rate_et.addTextChangedListener(new TextWatcher() {
-
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-
-                /*if(!s.equals("")) {
-
-                    if (from_con_dollar_rate_et.getText().toString().equals("")) {
-
-
-                        double number1 = Double.valueOf("0");
-
-                        System.out.println("Number 1-----------: "+number1);
-
-
-                        double number2 = Double.valueOf(to_dollar_txt.getText().toString().trim());
-
-                        System.out.println("Number 2-----------: "+number2);
-
-                        double result = (number1 * number2);
-
-                        System.out.println("Result ------------: "+result);
-                        //double number2 = Math.round((number1 * 10) / 25);
-
-                        if (keepChangingText) {
-                            keepChangingText = false;
-                            to_con_dollar_rate_et.setText(String.valueOf(result));
-                        } else {
-                            keepChangingText = true;
-                        }
-
-                    } else {
-
-                        double number1 = Double.valueOf(from_con_dollar_rate_et.getText().toString());
-
-
-                        System.out.println("Number 1: "+number1);
-
-
-                        double number2 = Double.valueOf(to_dollar_txt.getText().toString().trim());
-
-                        System.out.println("Number 2: "+number2);
-
-                        double result = (number1 * number2);
-
-                        System.out.println("Result : "+result);
-                        //double number2 = Math.round((number1 * 10) / 25);
-
-                        if (keepChangingText) {
-                            keepChangingText = false;
-                            to_con_dollar_rate_et.setText(String.valueOf(result));
-                        } else {
-                            keepChangingText = true;
-                        }
-                    }
-
-                }*/
-
-
-
-                if(!s.equals("") )
-                {
-                    try {
-
-                        String f_value= from_con_dollar_rate_et.getText().toString().trim();
-
-                        System.out.println("Values"+f_value);
-
-                        if (f_value.isEmpty())
-
-                        {
-                            String ff_value="0";
-
-                            String rate=to_dollar_txt.getText().toString().trim();
-
-                            String t2 = String.valueOf(Float.valueOf(ff_value) * Float.valueOf(rate));
-
-                            to_con_dollar_rate_et.setText(new DecimalFormat("##.##").format(Double.parseDouble(t2)));
-                        }
-                        else {
-
-                            String rate=to_dollar_txt.getText().toString().trim();
-
-                            String t2 = String.valueOf(Float.valueOf(f_value) * Float.valueOf(rate));
-
-                            to_con_dollar_rate_et.setText(new DecimalFormat("##.##").format(Double.parseDouble(t2)));
-                        }
-
-
-                    }
-                    catch (NumberFormatException e)
-                    {
-                        e.getMessage();
-                    }
-
-                }
-
-
-            }
-
-            public void beforeTextChanged(CharSequence s, int start, int count,
-                                          int after) {
-
-            }
-
-            public void afterTextChanged(Editable s) {
-
-
-            }
-        });
-
-
             }
         });
 
 
 
-        /*to_con_dollar_rate_et.setOnClickListener(new View.OnClickListener() {
+        to_con_dollar_rate_et.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 // Perform action on click
                 to_linear.setBackgroundResource(R.drawable.grey);
                 currency_con.setBackgroundResource(R.drawable.grey);
+                add_to_card.setVisibility(View.GONE);
                 basket_icon.setVisibility(View.GONE);
                 to_con_dollar_rate_et.setCursorVisible(true);
                 from_con_dollar_rate_et.setCursorVisible(true);
 
-
-                to_con_dollar_rate_et.addTextChangedListener(new TextWatcher() {
-
-                    public void onTextChanged(CharSequence s, int start, int before,int count) {
-
-
-
-                        *//*if (to_con_dollar_rate_et.getText().toString().equals("")) {
-
-                            double number1 = Double.valueOf("0");
-
-                            System.out.println("Number 1-----------: "+number1);
-
-
-                            double number2 = Double.valueOf(to_dollar_txt.getText().toString().trim());
-
-                            System.out.println("Number 2-----------: "+number2);
-
-                            double result = (number1 * number2);
-
-                            System.out.println("Result ------------: "+result);
-
-                            from_con_dollar_rate_et.setText(String.valueOf(result));
-
-                            *//**//*if (keepChangingText) {
-                                keepChangingText = false;
-                                from_con_dollar_rate_et.setText(String.valueOf(result));
-                            } else {
-                                keepChangingText = true;
-                            }*//**//*
-
-                        }
-                        else {
-                            double number1 = Double.valueOf(to_con_dollar_rate_et.getText().toString());
-
-                            System.out.println("Number 1: "+number1);
-
-                            double number2 = Double.valueOf(to_dollar_txt.getText().toString().trim());
-
-                            System.out.println("Number 2: "+number2);
-
-                            double result = (number1 * number2);
-
-                            System.out.println("Result ------------: "+result);
-
-                            from_con_dollar_rate_et.setText(String.valueOf(number1));
-
-                            //double number1 = Math.round((number2 * 20) / 35);
-                            *//**//*if (keepChangingText) {
-                                keepChangingText = false;
-                                from_con_dollar_rate_et.setText(String.valueOf(number1));
-                            } else {
-                                keepChangingText = true;
-                                from_con_dollar_rate_et.setText(String.valueOf(number1));
-                            }*//**//*
-
-                        }*//*
-
-                       *//* if(!s.equals("") )
-                        {
-                            try {
-
-                                String f_value= to_con_dollar_rate_et.getText().toString().trim();
-
-                                System.out.println("Values123"+f_value);
-
-                                if (f_value.isEmpty())
-
-                                {
-                                    String ff_value="0";
-
-                                    String rate=to_dollar_txt.getText().toString().trim();
-
-                                    String t2 = String.valueOf(Float.valueOf(ff_value) * Float.valueOf(rate));
-
-                                    from_con_dollar_rate_et.setText(t2);
-                                }
-                                else {
-
-                                    String rate=to_dollar_txt.getText().toString().trim();
-
-                                    String t2 = String.valueOf(Float.valueOf(f_value) * Float.valueOf(rate));
-
-                                    from_con_dollar_rate_et.setText(t2);
-                                }
-
-
-
-
-
-                            }
-                            catch (NumberFormatException e)
-                            {
-                                e.getMessage();
-                            }
-
-                        }*//*
-
-
-                    }
-
-                    public void beforeTextChanged(CharSequence s, int start, int count,
-                                                  int after) {
-
-                    }
-
-                    public void afterTextChanged(Editable s) {
-
-
-                    }
-                });
-
-
             }
-        });*/
+        });
 
 
 
@@ -987,13 +764,17 @@ public class CurrencyWizard extends Activity implements Comparator<Country> {
     //getCurrencyValue
         public  void getCurrencyValue(String from_dollar_value , String to_dollar_value){
 
-
+            pd = new ProgressDialog(context, AlertDialog.THEME_DEVICE_DEFAULT_LIGHT);
+            pd.setMessage("Loading...");
+            pd.setCancelable(false);
+            pd.show();
             //System.out.println("From Currency value : "+from_dollar_value);
             //System.out.println("TO Currency value : "+to_dollar_value);
 
 
             if(from_dollar_value.equals(to_dollar_value) )
             {
+                closeProgress();
 
                 to_dollar_txt.setText("1.00");
                 //from_con_dollar_rate_et.setText();
@@ -1010,7 +791,9 @@ public class CurrencyWizard extends Activity implements Comparator<Country> {
                 Elements p_tags = doc.select("span");
                 for (Element p : p_tags) {
 
-                    System.out.println("Currency value is " + p.text().substring(0, 5));
+                    closeProgress();
+
+                    System.out.println("To Currency value is " + p.text().substring(0, 5));
 
                     to_dollar_txt.setText(p.text().substring(0, 5));
 
@@ -1037,6 +820,67 @@ public class CurrencyWizard extends Activity implements Comparator<Country> {
                 }
             }
         }
+
+
+    public  void getFromCurrencyValue(String to_dollar_value , String from_dollar_value){
+
+
+        pd = new ProgressDialog(context, AlertDialog.THEME_DEVICE_DEFAULT_LIGHT);
+        pd.setMessage("Loading...");
+        pd.setCancelable(false);
+        pd.show();
+        //System.out.println("From Currency value : "+from_dollar_value);
+        //System.out.println("TO Currency value : "+to_dollar_value);
+
+
+        if(from_dollar_value.equals(to_dollar_value) )
+        {
+            closeProgress();
+
+            to_dollar_txt.setText("1.00");
+            //from_con_dollar_rate_et.setText();
+            String f_value = to_con_dollar_rate_et.getText().toString().trim();
+
+            from_con_dollar_rate_et.setText(f_value);
+
+        }
+
+        else {
+
+
+            Document doc = Jsoup.parse(readURL("https://www.google.com/finance/converter?a=1&from=" + to_dollar_value + "&to=" + from_dollar_value));
+            Elements p_tags = doc.select("span");
+            for (Element p : p_tags) {
+
+                closeProgress();
+
+                System.out.println("From Currency value is " + p.text().substring(0, 5));
+
+                //to_dollar_txt.setText(p.text().substring(0, 5));
+
+                try {
+                    String f_value = to_con_dollar_rate_et.getText().toString().trim();
+
+                    String rate = p.text().substring(0, 5).trim();
+
+                    String t2 = String.valueOf(Float.valueOf(f_value) * Float.valueOf(rate));
+
+                    from_con_dollar_rate_et.setText(new DecimalFormat("##.##").format(Double.parseDouble(t2)));
+
+                }catch (NumberFormatException e) {
+
+                    //System.out.println("Exception :" +e.getMessage());
+
+                    String numberOnly= e.getMessage().replaceAll("[^0-9]", "");
+
+                    from_con_dollar_rate_et.setText(new DecimalFormat("##.##").format(Double.parseDouble(numberOnly)));
+
+                    //System.out.println("Exception Value : "+new DecimalFormat("##.##").format(Double.parseDouble(numberOnly)));
+
+                }
+            }
+        }
+    }
 
         public static String readURL(String url) {
 

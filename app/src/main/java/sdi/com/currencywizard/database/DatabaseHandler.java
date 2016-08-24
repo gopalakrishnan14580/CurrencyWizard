@@ -121,6 +121,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         Cursor cursor = db.rawQuery(countQuery, null);
         int cnt = cursor.getCount();
         cursor.close();
+        db.close();
         return cnt;
     }
     public List<BasketList> getAllBasket() {
@@ -216,6 +217,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         // updating row
         return db.update(TABLE_BASKET_LIST, values, BASKET_LIST_ID + " = ?",
                 new String[] { String.valueOf(basket.getId()) });
+
     }
 
 }
